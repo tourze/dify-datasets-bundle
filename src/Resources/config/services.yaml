@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # Request classes for Dify Datasets API
+    Tourze\DifyDatasetsBundle\Request\:
+        resource: '../../Request'
+        tags:
+            - 'tourze.dify_datasets_bundle.request'
