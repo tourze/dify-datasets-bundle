@@ -58,13 +58,11 @@ final class DifyDatasetsExtensionTest extends AbstractDependencyInjectionExtensi
         $this->extension->load([], $this->container);
 
         $definitions = $this->container->getDefinitions();
+        $bundleServices = array_filter($definitions, fn($id) => str_starts_with($id, 'Tourze\\DifyDatasetsBundle\\'), ARRAY_FILTER_USE_KEY);
 
-        // Check that autowiring is enabled for bundle services
-        foreach ($definitions as $id => $definition) {
-            if (str_starts_with($id, 'Tourze\DifyDatasetsBundle\\')) {
-                $this->assertTrue($definition->isAutowired(), "Service {$id} should be autowired");
-            }
-        }
+        // This bundle only contains Request DTOs and no services
+        // So we expect no bundle services to be registered
+        $this->assertEmpty($bundleServices, 'DifyDatasetsBundle should not register any services as it only contains Request DTOs');
     }
 
     public function testLoadSetsCorrectAutoconfiguration(): void
@@ -72,13 +70,11 @@ final class DifyDatasetsExtensionTest extends AbstractDependencyInjectionExtensi
         $this->extension->load([], $this->container);
 
         $definitions = $this->container->getDefinitions();
+        $bundleServices = array_filter($definitions, fn($id) => str_starts_with($id, 'Tourze\\DifyDatasetsBundle\\'), ARRAY_FILTER_USE_KEY);
 
-        // Check that autoconfiguration is enabled for bundle services
-        foreach ($definitions as $id => $definition) {
-            if (str_starts_with($id, 'Tourze\DifyDatasetsBundle\\')) {
-                $this->assertTrue($definition->isAutoconfigured(), "Service {$id} should be autoconfigured");
-            }
-        }
+        // This bundle only contains Request DTOs and no services
+        // So we expect no bundle services to be registered
+        $this->assertEmpty($bundleServices, 'DifyDatasetsBundle should not register any services as it only contains Request DTOs');
     }
 
     public function testLoadMultipleCalls(): void
